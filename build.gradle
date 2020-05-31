@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+ext {
+    set('springCloudVersion', "Greenwich.SR3")
+    set('springBootGrpcVersion', "2.7.0.RELEASE")
+}
+
+group 'rshu.example.grpc'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation "net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}"
+    implementation "io.zipkin.brave:brave-instrumentation-grpc:5.10.2"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
